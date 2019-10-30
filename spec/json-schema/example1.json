@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$comment": "JSON Schema for client SOW",
+  "$id": "IClientSow",
+  "title": "IClientSow",
+  "type": "object",
+  "required": [
+    "client_id",
+    "is_active",
+    "sow_name",
+    "session_purchased",
+    "session_rate",
+    "session_type",
+    "session_count_per_coachee",
+    "start_date",
+    "end_date"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "int",
+      "maxLength": 200
+    },
+    "sow_id": {
+      "type": "string",
+      "description": "varchar",
+      "maxLength": 100
+    },
+    "client_id": {
+      "type": "integer",
+      "description": "int"
+    },
+    "is_active": {
+      "type": "string",
+      "description": "varchar",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "client_admin_id": {
+      "type": "integer",
+      "description": "int"
+    },
+    "sow_name": {
+      "type": "string",
+      "description": "varchar",
+      "maxLength": 100
+    },
+    "session_type": {
+      "type": "string",
+      "description": "varchar",
+      "enum": [
+        "EXECUTIVE",
+        "NON-EXECUTIVE"
+      ]
+    },
+    "session_purchased": {
+      "type": "integer",
+      "description": "int",
+      "minimum": 1
+    },
+    "session_rate": {
+      "type": "number",
+      "description": "double",
+      "minimum": 1
+    },
+    "session_count_per_coachee": {
+      "type": "integer",
+      "description": "int",
+      "minimum": 1
+    },
+    "start_date": {
+      "type": "string",
+      "description": "datetime",
+      "pattern": "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})"
+    },
+    "end_date": {
+      "type": "string",
+      "description": "datetime",
+      "pattern": "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})"
+    }
+  }
+}
