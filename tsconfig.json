@@ -9,5 +9,9 @@
       "esModuleInterop": true,
       "inlineSourceMap": false,
       "resolveJsonModule": true
-    }
+    },
+    "exclude": [
+      "spec",
+      "dist"
+    ]
   }

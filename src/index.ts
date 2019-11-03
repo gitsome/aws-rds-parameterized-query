@@ -28,14 +28,9 @@ interface IAttributes {
   [key: string]: any;
 }
 
-const sqlParameterizedQuery = (attributeKeyValues: IAttributes, jsonSchemaDereferenced: IJsonSchema) => {
+const getParameters = (attributeKeyValues: IAttributes, jsonSchemaDereferenced: IJsonSchema) => {
 
-  const attributes = `(${Object.keys(attributeKeyValues).join(',')})`;
-  const values = `(${Object.keys(attributeKeyValues).map((attribute) => { return `:${attribute}`;}).join(',')})`;
-
-  const parameters = Object.keys(attributeKeyValues).map((attributeKey: string) => {
-
-    console.log('attributeKey:', jsonSchemaDereferenced.properties);
+  return Object.keys(attributeKeyValues).map((attributeKey: string) => {
 
     if (jsonSchemaDereferenced.properties[attributeKey] === undefined) {
       const detectedProperties = jsonSchemaDereferenced.properties ? `[${Object.keys(jsonSchemaDereferenced.properties)}]` : 'UNDEFINED';
@@ -51,10 +46,18 @@ const sqlParameterizedQuery = (attributeKeyValues: IAttributes, jsonSchemaDerefe
     }
 
     return {
-      'name': 'package_name',
+      'name': attributeKey,
       'value': { [rdsParameterType]: attributeKeyValues[attributeKey] }
     };
   });
+};
+
+const insert = (attributeKeyValues: IAttributes, jsonSchemaDereferenced: IJsonSchema) => {
+
+  const attributes = `(${Object.keys(attributeKeyValues).join(',')})`;
+  const values = `(${Object.keys(attributeKeyValues).map((attribute) => { return `:${attribute}`;}).join(',')})`;
+
+  const parameters = getParameters(attributeKeyValues, jsonSchemaDereferenced);
 
   return {
     attributes,
@@ -63,4 +66,18 @@ const sqlParameterizedQuery = (attributeKeyValues: IAttributes, jsonSchemaDerefe
   };
 };
 
-export default sqlParameterizedQuery;
+const update = (attributeKeyValues: IAttributes, jsonSchemaDereferenced: IJsonSchema) => {
+
+  const update = `${Object.keys(attributeKeyValues).map((attribute) => { return `${attribute}=:${attribute}`;}).join(',')}`;
+  const parameters = getParameters(attributeKeyValues, jsonSchemaDereferenced);
+
+  return {
+    update,
+    parameters
+  };
+};
+
+export default {
+  insert,
+  update
+};

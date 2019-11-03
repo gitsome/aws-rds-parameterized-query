@@ -1,10 +1,10 @@
 {
   "name": "aws-rds-parameterized-query",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A helper function to create redundant pieces of paramaterized sql queries for AWS RDS Data API",
   "main": "dist/index.js",
   "files": [
-    "dist/index.js"
+    "dist"
   ],
   "engines": {
     "node": ">=8"
